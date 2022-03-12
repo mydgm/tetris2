@@ -2,7 +2,8 @@
 
 using namespace ge211;
 
-int level_ = 1;
+static const double initial_velocity = 2;
+
 Controller::Controller()
         : Controller(10,20)
 { }
@@ -25,17 +26,18 @@ double update_frame = 0;
 
 void Controller::on_frame(double)
 {
-if(!model_.is_game_over()) {
-    Piece p = model_.active_piece_;
-    if (update_frame >= max_frame) {
-        model_.move_down();
-        update_frame = 0;
+    if(!model_.is_game_over()) {
+        Piece p = model_.active_piece_;
+        if (update_frame >= max_frame) {
+            model_.move_down();
+            update_frame = 0;
 
+        }
+        update_frame += 1;
     }
-    update_frame += 1;
-}
 
 }
+
 void Controller::on_key(ge211::Key key)
 {
 
@@ -52,11 +54,17 @@ void Controller::on_key(ge211::Key key)
             model_.move_down();
         }
         if (key == key.up()) {
-           model_.rotate_piece();
+            model_.rotate_piece();
 
         }
     }
 }
+void Controller::on_key_up(ge211::Key key) {
+    if (key == ge211::Key::down()){
+        model_.active_piece_.velocity = initial_velocity;
+    }
+}
+
 View::Dimensions Controller::initial_window_dimensions() const
 {
     return view_.initial_window_dimensions();
