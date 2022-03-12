@@ -32,12 +32,12 @@ private:
     // Draws the score.
     // void draw_score_(ge211::Sprite_set&);
 
-    //ge211::Rectangle_sprite const square_piece;
-    //ge211::Rectangle_sprite const T_piece;
-    //ge211::Rectangle_sprite const L_piece;
-    //ge211::Rectangle_sprite const Z_piece;
-    //ge211::Rectangle_sprite const I_piece;
-    //ge211::Rectangle_sprite const ghost_cell;
+    ge211::Rectangle_sprite const square_piece;
+    ge211::Rectangle_sprite const T_piece;
+    ge211::Rectangle_sprite const L_piece;
+    ge211::Rectangle_sprite const Z_piece;
+    ge211::Rectangle_sprite const I_piece;
+    ge211::Rectangle_sprite const ghost_cell;
 
     ge211::Rectangle_sprite const board_tile;
     //std::size_t const previous_score_;  // currently rendered in score_sprite_
