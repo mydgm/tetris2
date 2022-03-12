@@ -25,6 +25,8 @@ public:
     /// This can be used to iterate over the positions.
     Rectangle board() const;
 
+    
+    void move_piece_faster ();
 
     // function on frame to set the board position to true if the game detect
     // collison.
@@ -38,7 +40,7 @@ public:
     // return the active piece inside the board
     Piece active_piece ()
     {return active_piece_ ;}
-    void rotate_piece();
+    
 
     Piece next_piece ()
     { return next_piece_;}
@@ -52,10 +54,14 @@ public:
     Piece ghost() const;
 
     //check the collisions of any of the pieces going on the board
+    //check if the piece can actually move in any direction and return true
+    // if it can
+    bool is_it_inside_board (Piece p);
 
     //check if the piece can actually move in any direction and return true
     // if it can
-    bool is_it_possible_move ();
+    bool is_it_possible_move (Piece p);
+    
     // add a piece to the board and update that position of the board to true.
     void lock_piece (Piece) ;
 
@@ -78,8 +84,12 @@ public:
     void move_right(Piece piece);
 
     // Moves a piece down if it will not collide.
-    //void move_down(Piece piece);
     void move_down();
+    
+    // rotate the piece 90 degree to the right and check to not be out of board
+    void rotate_piece();
+    
+    // intiate random piece each time
     Piece active_piece_ = create_piece(random_piece());
 
 
@@ -101,7 +111,7 @@ private:
 
     bool game_over_ = false;
 
-    bool check_collision ();
+    bool check_collision (Piece p);
 
     // check if any row of board is full and delete it..
     void clear_line();
