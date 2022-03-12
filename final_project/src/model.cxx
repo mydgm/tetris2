@@ -36,6 +36,63 @@ Model::move_down(Piece piece)
     //}
 }*/
 
+bool
+Model::check_collision(Piece p )
+{
+    Piece current_piece = active_piece_;
+
+    for (auto pos : p.get_actual_body()) {
+
+        if (board_.is_occupied(pos) == 0) {
+
+            if (p.get_name() != Piece_type::neither) {
+
+                for (auto pos2 : current_piece.get_actual_body()) {
+
+                    if (board_.is_occupied(pos2) != board_.is_occupied(pos)) {
+
+                        return false;
+
+                    }
+                }
+            }
+
+        }
+    }
+    return true;
+
+}
+
+bool
+Model::is_it_inside_board(Piece p)
+{
+
+    for (auto pos :p.get_actual_body()) {
+
+        if (!board_.good_position(pos)) {
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool
+Model::is_it_possible_move(Piece p)
+{
+
+    return is_it_inside_board(p) && check_collision(p);
+}
+
+void
+Model::move_piece_faster()
+{
+    double v = 6;
+
+    active_piece_.velocity *= v;
+}
+
 void
 Model::move_down()
 {
