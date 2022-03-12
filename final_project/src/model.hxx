@@ -54,10 +54,13 @@ public:
 
     //check if the piece can actually move in any direction and return true
     // if it can
-    bool is_it_possible_move ();
+    bool is_it_inside_board (Piece p);
+
     // add a piece to the board and update that position of the board to true.
+
     void lock_piece (Piece) ;
 
+    bool is_it_possible_move (Piece p);
 
     //exchange the current piece if the player doesn't want it to be there if
     //
@@ -98,9 +101,11 @@ private:
 
     bool game_over_ = false;
 
-    bool check_collision ();
+    bool check_collision (Piece p);
+
 
     // check if any row of board is full and delete it..
     void clear_line();
+
 
 };
