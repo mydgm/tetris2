@@ -1,4 +1,5 @@
 #include "model.hxx"
+#include "piece.hxx"
 #include <cmath>
 
 Model::Model()
@@ -14,35 +15,55 @@ Model::board() const
 {
     return Rectangle::from_top_left(Position{0,0},board_.dimensions());
 }
+/*void
 Model::move_down(Piece piece)
 {
-    Piece copy_p = piece;
-    int i = 0;
-    for( auto pos: piece.get_actual_body()){
-        piece.get_actual_body()[i].y = copy_p.get_actual_body()[i].y + 1;
-        i ++;
+    Position new_pos = {0,1};
+
+    std::vector<ge211::Posn<int>> current_positions;
+
+    for (auto pos: piece.get_body()) {
+
+        pos = {pos.x + new_pos.x, pos.y+ new_pos.y};
+
+        current_positions.push_back(pos);
+    }
+
+    piece.actual_pos_ = current_positions;
+    //if (can_move(b)) {
+      //  update_board(piece.get_body(), b);
+        //update_current_piece(b);
+    //}
+}*/
+
+void
+Model::move_down()
+{
+
+    for (int i = 0; i < 4; i++) {
+        active_piece_.actual_pos_[i] =
+                {active_piece_.actual_pos_[i].x,
+                 active_piece_.actual_pos_[i].y + 1};
 
     }
 }
 void
 Model::move_left(Piece piece)
 {
-    Piece copy_p = piece;
-    int i = 0;
-    for( auto pos: piece.get_actual_body()){
-        piece.get_actual_body()[i].x = copy_p.get_actual_body()[i].x - 1;
-        i ++;
+    for (int i = 0; i < 4; i++) {
+        active_piece_.actual_pos_[i] =
+                {active_piece_.actual_pos_[i].x-1,
+                 active_piece_.actual_pos_[i].y};
 
     }
 }
 void
 Model::move_right(Piece piece)
 {
-    Piece copy_p = piece;
-    int i = 0;
-    for( auto pos: piece.get_actual_body()){
-        piece.get_actual_body()[i].x = copy_p.get_actual_body()[i].x + 1;
-        i ++;
+    for (int i = 0; i < 4; i++) {
+        active_piece_.actual_pos_[i] =
+                {active_piece_.actual_pos_[i].x+1,
+                 active_piece_.actual_pos_[i].y};
 
     }
 }
@@ -53,6 +74,7 @@ Model::on_frame()
     Piece current = active_piece_;
     for (auto pos :current.get_body())
     {
+
         board_.is_occupied(pos);
     }
 }
@@ -65,7 +87,7 @@ Model::is_game_over()
     // that the piece can preform
     for (int i = 0; i < board_.dimensions().width; i++)
 
-        if (board_[i][0] = 1) {
+        if (board_.mboard[i][0] == 1) {
 
             return true;
         }
@@ -89,7 +111,84 @@ Model::ghost() const
     // return new ghost
     // want the ghost piece to have the lowest possible value at the board
     //what function I can use to do that?
+    return new_ghost;
 }
+void
+Model::rotate_piece()
+{
+
+    if (active_piece_.get_name() == Piece_type::line) {
+        for (int i = 0; i < 4; i++) {
+            int intial_x = active_piece_.pos_[i].x;
+            int intial_y = active_piece_.pos_[i].y;
+            int real_intial_x = active_piece_.actual_pos_[i].x;
+            int real_intial_y = active_piece_.actual_pos_[i].y;
+
+            active_piece_.pos_[i] = {intial_y, intial_x};
+
+            Piece::Position diff = ge211::geometry::Posn<int>(active_piece_
+                                                                      .pos_[i].x -
+                                                              intial_x,
+                                                              active_piece_.pos_[i]
+                                                                      .y -
+                                                              intial_y);
+            active_piece_.actual_pos_[i] = {active_piece_.actual_pos_[i].x +
+                                            diff.x,
+                                            active_piece_.actual_pos_[i].y +
+                                            diff.y};
+
+
+        }
+    } else {
+
+            for (int i = 0; i < 4; i++) {
+                int intial_x = active_piece_.pos_[i].x;
+                int intial_y = active_piece_.pos_[i].y;
+                int real_intial_x = active_piece_.actual_pos_[i].x;
+                int real_intial_y = active_piece_.actual_pos_[i].y;
+
+                active_piece_.pos_[i] = {2 - intial_y, intial_x};
+
+                Piece::Position diff = ge211::geometry::Posn<int>(active_piece_
+                                                                          .pos_[i]
+                                                                          .x -
+                                                                  intial_x,
+                                                                  active_piece_.pos_[i]
+                                                                          .y -
+                                                                  intial_y);
+                active_piece_.actual_pos_[i] = {active_piece_.actual_pos_[i].x +
+                                                diff.x,
+                                                active_piece_.actual_pos_[i].y +
+                                                diff.y};
+
+
+                /*Piece::Position diff = ge211::geometry::Posn<int>(copy_p.pos_
+                        [i].x - p.pos_[i].x, copy_p.pos_[i].y - p.pos_[i].y);
+
+                copy_p.pos_[i] = {2-p.pos_[i].y, p.pos_[i].x};
+
+                copy_p.actual_pos_[i] = {p.pos_[i].x + diff.x,
+                                         p.pos_[i].y + diff.y};
+
+
+            }
+            /*for (int i = 0; i < 4; i++ ){
+                copy_p.pos_[i] = {2-p.pos_[i].y, p.pos_[i].x};
+                Piece::Position diff = ge211::geometry::Posn<int>(copy_p.pos_
+                                                                  [i].x - p.pos_[i]
+                                                                  .x, copy_p.pos_[i]
+                                                                  .y - p
+                        .pos_[i].y);
+                copy_p.actual_pos_[i] = {p.pos_[i].x + diff.x,
+                                               p.pos_[i].y + diff.y};
+
+
+            }*/
+            }
+
+        }
+
+    }
 
 void
 Model::lock_piece(Piece piece)
@@ -128,56 +227,6 @@ Model::update_piece()
 active_piece_ = next_piece_;
 
 }
-
-bool
-Model::check_collision(Piece p )
-{
-    Piece current_piece = active_piece_;
-
-    for (auto pos : p.get_actual_body()) {
-
-        if (board_.is_occupied(pos) == 0) {
-
-            if (p.get_name() != Piece_type::neither) {
-
-                for (auto pos2 : current_piece.get_actual_body()) {
-
-                    if (board_.is_occupied(pos2) != board_.is_occupied(pos)) {
-
-                        return false;
-
-                    }
-                }
-            }
-
-        }
-    }
-    return true;
-
-}
-
-bool
-Model::is_it_inside_board(Piece p)
-{
-
-    for (auto pos :p.get_actual_body()) {
-
-        if (!board_.good_position(pos)) {
-
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool
-Model::is_it_possible_move(Piece p)
-{
-
-    return is_it_inside_board(p) && check_collision(p);
-}
-
 /*
 Model::Model()
         : Model(20)
