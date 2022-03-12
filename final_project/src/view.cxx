@@ -30,43 +30,32 @@ View::draw(ge211::Sprite_set& set)
 
         Position current_tile = board_to_screen(pos);
 
-        set.add_sprite(board_tile, current_tile,0.5);
+        set.add_sprite(board_tile, current_tile, 0.5);
     }
 
-    for (auto pos : model_.ghost().get_body())
-     {
-         set.add_sprite(ghost_cell, board_to_screen(pos), 1);
-     }
-
-     for (int row = 0; row <model_.board().dimensions().height; row++) {
-         for (int col = 0; col < model_.board().dimensions().width; col++) {
-             Position pos = {col,row};
-             Piece_type type = model_.active_piece_.get_name();
-
-             if (type == Piece_type::t_flipped) {
-                 set.add_sprite(T_piece, board_to_screen(Position{col,row})
-                         ,2);
-             }
-             else if (type == Piece_type::square) {
-                 set.add_sprite(square_piece, board_to_screen(Position{col,
-                                                                       row})
-                         ,2);
-             }
-             else if (type == Piece_type::L_shape) {
-                 set.add_sprite(L_piece, board_to_screen(Position{col,row})
-                         ,2);
-             }
-             else if (type == Piece_type::z) {
-                 set.add_sprite(Z_piece, board_to_screen(Position{col,row})
-                         ,2);
-             }
-             else if (type == Piece_type::line) {
-                 set.add_sprite(I_piece, board_to_screen(Position{col,row})
-                         ,2);
-             }
-         }
-     }
-
+    Piece_type type = model_.active_piece_.get_name();
+    for (auto pos: model_.active_piece_.get_actual_body()) {
+        if (type == Piece_type::t_flipped) {
+            set.add_sprite(T_piece, board_to_screen(pos)
+                    ,2);
+        }
+        else if (type == Piece_type::square) {
+            set.add_sprite(square_piece, board_to_screen(pos)
+                    ,2);
+        }
+        else if (type == Piece_type::L_shape) {
+            set.add_sprite(L_piece, board_to_screen(pos)
+                    ,2);
+        }
+        else if (type == Piece_type::z) {
+            set.add_sprite(Z_piece, board_to_screen(pos)
+                    ,2);
+        }
+        else if (type == Piece_type::line) {
+            set.add_sprite(I_piece, board_to_screen(pos)
+                    ,2);
+        }
+    }
 }
 
 /*void
