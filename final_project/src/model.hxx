@@ -38,6 +38,7 @@ public:
     // return the active piece inside the board
     Piece active_piece ()
     {return active_piece_ ;}
+    void rotate_piece();
 
     Piece next_piece ()
     { return next_piece_;}
@@ -54,13 +55,10 @@ public:
 
     //check if the piece can actually move in any direction and return true
     // if it can
-    bool is_it_inside_board (Piece p);
-
+    bool is_it_possible_move ();
     // add a piece to the board and update that position of the board to true.
-
     void lock_piece (Piece) ;
 
-    bool is_it_possible_move (Piece p);
 
     //exchange the current piece if the player doesn't want it to be there if
     //
@@ -80,12 +78,14 @@ public:
     void move_right(Piece piece);
 
     // Moves a piece down if it will not collide.
-    void move_down(Piece piece);
+    //void move_down(Piece piece);
+    void move_down();
+    Piece active_piece_ = create_piece(random_piece());
 
 
 private:
 
-    Piece active_piece_ = create_piece(random_piece());
+
 
     Piece next_piece_ = create_piece(random_piece());
 
@@ -101,11 +101,21 @@ private:
 
     bool game_over_ = false;
 
-    bool check_collision (Piece p);
-
+    bool check_collision ();
 
     // check if any row of board is full and delete it..
     void clear_line();
+
+    void
+    update_board(std::vector<Position> posns, Piece brick);
+
+
+#ifdef CS211_TESTING
+// When this class is compiled for testing, members of a struct named
+    // Test_access will be allowed to access private members of this class.
+
+    friend struct Test_access;
+#endif
 
 
 };
