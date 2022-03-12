@@ -50,3 +50,20 @@ Board::is_occupied(Position where) {
 
     return mboard[where.y][where.x];
 }
+
+void
+Board::delete_line()
+{
+    for(int j = dimensions().height; j > 0 ; j--){
+        if (j == 1){
+            for (int i = dimensions().height; i > 0; i--) {
+                mboard[j][i] = 0;
+            }
+        }
+        else{
+            for (int i = dimensions().height; i > 0; i--) {
+                mboard[j][i] = mboard[j-1][i];
+            }
+        }
+    }
+}
