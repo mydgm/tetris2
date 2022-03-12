@@ -118,6 +118,7 @@ Piece_type random_piece()
     }
 }
 
+
 Piece rotate_piece(Piece p)
 {
     Piece copy_p = p;
@@ -125,18 +126,32 @@ Piece rotate_piece(Piece p)
         int i = 0;
         for (auto pos : p.get_body() ) {
             copy_p.get_body()[i] = {pos.y, pos.x};
+            Piece::Position diff = ge211::geometry::Posn<int>(copy_p.get_body()
+                    [i].x - p.get_body()[i].x, copy_p.get_body()[i].y - p
+                    .get_body()[i].y);
+            copy_p.get_actual_body()[i] = {p.get_actual_body()[i].x + diff.x,
+                                           p.get_actual_body()[i].y + diff.y};
+
+
+
             i++;
-            return copy_p;
+
         }
     }
     else {
         int i  = 0;
         for (auto pos : p.get_body() ){
             copy_p.get_body()[i] = {2-pos.y, pos.x};
+            Piece::Position diff = ge211::geometry::Posn<int>(copy_p.get_body()
+                                                              [i].x - p.get_body()[i].x, copy_p.get_body()[i].y - p
+                    .get_body()[i].y);
+            copy_p.get_actual_body()[i] = {p.get_actual_body()[i].x + diff.x,
+                                           p.get_actual_body()[i].y + diff.y};
             i++ ;
 
         }
     }
+
 
     return copy_p;
 }
