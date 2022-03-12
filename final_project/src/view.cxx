@@ -7,6 +7,15 @@ Dims<int> const offset_window = {25, 0};
 int const grid_size = 40;
 View::View(Model const& model)
         : model_(model),
+          square_piece{{36,36}, ge211::Color::medium_red
+                  ()},
+          T_piece{{36,36}  ,ge211::Color(255,255,0)
+          },
+          L_piece{{36,36},ge211::Color::medium_blue()},
+          Z_piece{{36,36},ge211::Color::medium_cyan()},
+          I_piece{{36,36},ge211::Color::medium_green()},
+          ghost_cell{{36,36}, ge211::Color(160,160,
+                                           160)},
           board_tile{{36,36},
                      ge211::Color::white()}
 
@@ -24,15 +33,17 @@ View::draw(ge211::Sprite_set& set)
         set.add_sprite(board_tile, current_tile,0.5);
     }
 
-    /* for (auto pos : model_.ghost().get_body())
+    for (auto pos : model_.ghost().get_body())
      {
          set.add_sprite(ghost_cell, board_to_screen(pos), 1);
      }
+
      for (int row = 0; row <model_.board().dimensions().height; row++) {
          for (int col = 0; col < model_.board().dimensions().width; col++) {
              Position pos = {col,row};
-             Piece_type type = model_.get_board().get_piece_type2(pos);
-             if (type == Piece_type::T_shape) {
+             Piece_type type = model_.active_piece_.get_name();
+
+             if (type == Piece_type::t_flipped) {
                  set.add_sprite(T_piece, board_to_screen(Position{col,row})
                          ,2);
              }
@@ -41,20 +52,20 @@ View::draw(ge211::Sprite_set& set)
                                                                        row})
                          ,2);
              }
-             else if (type == Piece_type::L_shapped) {
+             else if (type == Piece_type::L_shape) {
                  set.add_sprite(L_piece, board_to_screen(Position{col,row})
                          ,2);
              }
-             else if (type == Piece_type::Z_shapped) {
+             else if (type == Piece_type::z) {
                  set.add_sprite(Z_piece, board_to_screen(Position{col,row})
                          ,2);
              }
-             else if (type == Piece_type::I_shaped) {
+             else if (type == Piece_type::line) {
                  set.add_sprite(I_piece, board_to_screen(Position{col,row})
                          ,2);
              }
          }
-     }*/
+     }
 
 }
 
