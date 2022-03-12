@@ -14,7 +14,38 @@ Model::board() const
 {
     return Rectangle::from_top_left(Position{0,0},board_.dimensions());
 }
+Model::move_down(Piece piece)
+{
+    Piece copy_p = piece;
+    int i = 0;
+    for( auto pos: piece.get_actual_body()){
+        piece.get_actual_body()[i].y = copy_p.get_actual_body()[i].y + 1;
+        i ++;
 
+    }
+}
+void
+Model::move_left(Piece piece)
+{
+    Piece copy_p = piece;
+    int i = 0;
+    for( auto pos: piece.get_actual_body()){
+        piece.get_actual_body()[i].x = copy_p.get_actual_body()[i].x - 1;
+        i ++;
+
+    }
+}
+void
+Model::move_right(Piece piece)
+{
+    Piece copy_p = piece;
+    int i = 0;
+    for( auto pos: piece.get_actual_body()){
+        piece.get_actual_body()[i].x = copy_p.get_actual_body()[i].x + 1;
+        i ++;
+
+    }
+}
 
 void
 Model::on_frame()
