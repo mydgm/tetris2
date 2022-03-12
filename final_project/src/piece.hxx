@@ -28,6 +28,7 @@ public:
 
     // a vector of the current positions of piece blocks
     std::vector<Position> get_body() const;
+    std::vector<Position> get_actual_body() const;
 
     //constructor for a piece that has specific type and on_board
     // position
@@ -42,6 +43,7 @@ public:
 private:
     enum Piece_type type_;
     Position top_left_ = {4,0};
+    std::vector<Position> actual_pos_;
     std::vector<Position> pos_;
 
 };
