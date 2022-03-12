@@ -19,10 +19,13 @@ protected:
 
     View::Dimensions initial_window_dimensions() const override;
     std::string initial_window_title() const override;
-
+    void on_frame(double) override;
+    void on_key(ge211::Key key) override;
 private:
     Model model_;
     View view_;
     //int              upd_frames_ = 0;
+
+
 
 };
