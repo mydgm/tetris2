@@ -1,0 +1,21 @@
+Performing C++ SOURCE FILE Test LDFLAG_FSANITIZE_UNDEFINED_OKAY failed with the following output:
+Change Dir: C:/Users/lenovo/Downloads/github final project/final_project/cmake-build-debug-mingw/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/MinGW/bin/mingw32-make.exe -f Makefile cmTC_5d55c/fast && C:/MinGW/bin/mingw32-make.exe  -f CMakeFiles\cmTC_5d55c.dir\build.make CMakeFiles/cmTC_5d55c.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/lenovo/Downloads/github final project/final_project/cmake-build-debug-mingw/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5d55c.dir/src.cxx.obj
+C:\MinGW\bin\g++.exe -DLDFLAG_FSANITIZE_UNDEFINED_OKAY  -fsanitize=undefined  -o CMakeFiles\cmTC_5d55c.dir\src.cxx.obj -c "C:\Users\lenovo\Downloads\github final project\final_project\cmake-build-debug-mingw\CMakeFiles\CMakeTmp\src.cxx"
+Linking CXX executable cmTC_5d55c.exe
+"C:\Program Files\JetBrains\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_5d55c.dir\link.txt --verbose=1
+"C:\Program Files\JetBrains\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_5d55c.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\cmTC_5d55c.dir/objects.a @CMakeFiles\cmTC_5d55c.dir\objects1.rsp
+C:\MinGW\bin\g++.exe  -fsanitize=undefined  -Wl,--whole-archive CMakeFiles\cmTC_5d55c.dir/objects.a -Wl,--no-whole-archive -o cmTC_5d55c.exe -Wl,--out-implib,libcmTC_5d55c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_5d55c.dir\linklibs.rsp
+C:/MinGW/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/bin/ld.exe: cannot find -lubsan
+collect2.exe: error: ld returned 1 exit status
+mingw32-make.exe[1]: *** [CMakeFiles\cmTC_5d55c.dir\build.make:100: cmTC_5d55c.exe] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/lenovo/Downloads/github final project/final_project/cmake-build-debug-mingw/CMakeFiles/CMakeTmp'
+mingw32-make.exe: *** [Makefile:126: cmTC_5d55c/fast] Error 2
+
+
+Source file was:
+int main(){}
