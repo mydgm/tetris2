@@ -21,6 +21,10 @@ public:
     using Position = ge211::Posn<int>;
     using Dimensions = ge211::Dims<int>;
 
+    Piece(
+            Piece_type type,
+            std::vector<Piece::Position>& pos,
+            std::vector<Piece::Position>& actual_pos);
     //return the top left (middle posn at the board)
     Position get_top_left (Piece p) ;
     //return the piece type
@@ -32,19 +36,24 @@ public:
 
     //constructor for a piece that has specific type and on_board
     // position
-    Piece(Piece_type, std::vector<Position>&);
-
+    Position top_left_ = {4,0};
     int piece_intial_x_coord () const
     {return get_body()[0].x;}
-
+    ge211::Posn<int>
+    move_top_left(ge211::Posn<int> move);
     int piece_intial_y_coord () const
     {return get_body()[0].y;}
+    std::vector<Position> actual_pos_;
+    std::vector<Position> pos_;
+    void
+    rotate_piece();
 
 private:
     enum Piece_type type_;
-    Position top_left_ = {4,0};
-    std::vector<Position> actual_pos_;
-    std::vector<Position> pos_;
+
+    //std::vector<Position> actual_pos_;
+
+
 
 };
 
