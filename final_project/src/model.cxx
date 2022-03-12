@@ -91,6 +91,43 @@ Model::ghost() const
     //what function I can use to do that?
 }
 
+void
+Model::lock_piece(Piece piece)
+{
+    for( auto pos: piece.get_actual_body()){
+        board_.mboard[pos.y][pos.x] = 1;
+    }
+}
+void
+Model::clear_line()
+{
+    for (int j = 20; j <= board_.dimensions().height; j--) {
+        int sum_row = 0;
+        for (int i = 0; i <= board_.dimensions().width; i++) {
+            if (board_.mboard[j][i] == 1) {
+                sum_row++;
+
+            }
+
+        }
+        if (sum_row == 10) {
+            board_.delete_line();
+        }
+
+    }
+}
+
+void Model::exchange_piece()
+    {
+        active_piece_ = create_piece(random_piece());
+    }
+
+void
+Model::update_piece()
+{
+active_piece_ = next_piece_;
+
+}
 
 /*
 Model::Model()
