@@ -30,23 +30,24 @@ public:
     //return the piece type
     Piece_type get_name() const;
 
+    //velocity for the falling piece
+    double velocity;
+
     // a vector of the current positions of piece blocks
     std::vector<Position> get_body() const;
     std::vector<Position> get_actual_body() const;
 
     //constructor for a piece that has specific type and on_board
     // position
-    Position top_left_ = {4,0};
-    int piece_intial_x_coord () const
-    {return get_body()[0].x;}
-    ge211::Posn<int>
-    move_top_left(ge211::Posn<int> move);
-    int piece_intial_y_coord () const
-    {return get_body()[0].y;}
-    std::vector<Position> actual_pos_;
+
+  //  int piece_intial_x_coord () const
+    //{return get_body()[0].x;}
+    //int piece_intial_y_coord () const
+   // {return get_body()[0].y;}
+
     std::vector<Position> pos_;
-    void
-    rotate_piece();
+    std::vector<Position> actual_pos_;
+  
 
 private:
     enum Piece_type type_;
@@ -60,5 +61,3 @@ private:
 Piece_type random_piece();
 
 Piece create_piece(Piece_type type);
-
-Piece rotate_piece(Piece p);
