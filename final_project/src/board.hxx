@@ -34,6 +34,7 @@ public:
     /// Returns the same `Dimensions` value passed to the
     /// constructor.
     Dimensions dimensions() const;
+    void delete_line();
 
     /// Returns whether the given position is in bounds.
     bool good_position(Position) const;
