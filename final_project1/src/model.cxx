@@ -39,10 +39,9 @@ Model::move_down()
         if (check_collision(next_p)){
             game_active = false;
         }
-        else{
         lock_piece(active_piece_);
         active_piece_ = next_p;
-        ghost_piece   = active_piece_;}
+        ghost_piece   = active_piece_;
 
 
     }
@@ -131,6 +130,7 @@ Model::is_game_over()
 
     for (int i = 0; i < board_.dimensions().width; i++)
         if (board_.mboard[0][i] == 1) {
+            game_active =false;
             active_piece_ = create_piece(Piece_type::neither);
             ghost_piece = active_piece_;
             return true;

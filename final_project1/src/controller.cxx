@@ -40,7 +40,7 @@ if(!model_.is_game_over()) {
         model_.create_ghost();
         update_frame2 = 0;
     }
-    update_frame2 += 10;
+    update_frame2 += 20;
     model_.clear_line();
 }
 
@@ -53,6 +53,9 @@ void Controller::on_key(ge211::Key key)
 {
     if(key == ge211::Key::code('s')) {
         model_.game_active = true;
+    }
+    if(key == ge211::Key::code('p')) {
+        model_.game_active = false;
     }
 
     if (!model_.is_game_over() && model_.game_active) {
