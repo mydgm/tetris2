@@ -23,7 +23,7 @@ public:
     explicit Board(Dimensions dims);
     int mboard[20][10];
 
-
+std::vector<Piece_type> past_pieces;
 
 private:
 

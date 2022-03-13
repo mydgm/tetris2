@@ -83,7 +83,9 @@ public:
 
     Piece active_piece_ = create_piece(random_piece());
 
+    Board board_;
 
+    std::vector<Piece> past_pieces;
 private:
 
 
@@ -92,7 +94,7 @@ private:
 
     //Piece exchanged_piece_;
 
-    Board board_;
+    //Board board_;
 
     std::size_t score_ = 0;
 

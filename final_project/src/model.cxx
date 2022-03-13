@@ -151,6 +151,7 @@ Model::check_collision(Piece p )
 
 }
 
+
 bool
 Model::is_it_inside_board(Piece p)
 {
@@ -241,6 +242,7 @@ void
 Model::lock_piece(Piece piece)
 {
 
+  past_pieces.push_back(piece);
     for( auto pos: piece.get_actual_body()){
         board_.mboard[pos.y][pos.x] = 1;
     }

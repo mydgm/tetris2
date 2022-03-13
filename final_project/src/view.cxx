@@ -32,7 +32,23 @@ View::draw(ge211::Sprite_set& set)
 
         set.add_sprite(board_tile, current_tile, 0.5);
     }
+    for (Piece p :model_.past_pieces) {
 
+        Piece_type pt = p.get_name();
+        for (auto pos: p.get_actual_body()) {
+            if (pt == Piece_type::t_flipped) {
+                set.add_sprite(T_piece, board_to_screen(pos), 2);
+            } else if (pt == Piece_type::square) {
+                set.add_sprite(square_piece, board_to_screen(pos), 2);
+            } else if (pt == Piece_type::L_shape) {
+                set.add_sprite(L_piece, board_to_screen(pos), 2);
+            } else if (pt == Piece_type::z) {
+                set.add_sprite(Z_piece, board_to_screen(pos), 2);
+            } else if (pt == Piece_type::line) {
+                set.add_sprite(I_piece, board_to_screen(pos), 2);
+            }
+        }
+    }
     Piece_type type = model_.active_piece_.get_name();
     for (auto pos: model_.active_piece_.get_actual_body()) {
         if (type == Piece_type::t_flipped) {
@@ -56,6 +72,9 @@ View::draw(ge211::Sprite_set& set)
                     ,2);
         }
     }
+
+
+
    
 }
 /*
