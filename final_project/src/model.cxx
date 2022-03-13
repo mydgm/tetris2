@@ -185,9 +185,27 @@ void
 Model::rotate_piece()
 {
     ///check rotate
-    if (active_piece_.get_name() == Piece_type::line) {
+    Piece new_p = active_piece_;
+    if (new_p.get_name() == Piece_type::line) {
         for (int i = 0; i < 4; i++) {
             int intial_x = active_piece_.pos_[i].x;
+            int intial_y = active_piece_.pos_[i].y;
+            int real_intial_x = active_piece_.actual_pos_[i].x;
+            int real_intial_y = active_piece_.actual_pos_[i].y;
+
+            new_p.pos_[i] = {intial_y, intial_x};
+
+            Piece::Position diff = ge211::geometry::Posn<int>(new_p
+                                                                      .pos_[i].x -
+                                                              intial_x,
+                                                              new_p.pos_[i]
+                                                                      .y -
+                                                              intial_y);
+           new_p.actual_pos_[i] = {active_piece_.actual_pos_[i].x +
+                                            diff.x,
+                                            active_piece_.actual_pos_[i].y +
+                                            diff.y};
+            /*int intial_x = active_piece_.pos_[i].x;
             int intial_y = active_piece_.pos_[i].y;
             int real_intial_x = active_piece_.actual_pos_[i].x;
             int real_intial_y = active_piece_.actual_pos_[i].y;
@@ -203,7 +221,7 @@ Model::rotate_piece()
             active_piece_.actual_pos_[i] = {active_piece_.actual_pos_[i].x +
                                             diff.x,
                                             active_piece_.actual_pos_[i].y +
-                                            diff.y};
+                                            diff.y};*/
 
 
         }
@@ -212,8 +230,28 @@ Model::rotate_piece()
         //do nothing
     }
     else {
+        for (int i = 0; i < 4; i++) {
+            int intial_x = active_piece_.pos_[i].x;
+            int intial_y = active_piece_.pos_[i].y;
+            int real_intial_x = active_piece_.actual_pos_[i].x;
+            int real_intial_y = active_piece_.actual_pos_[i].y;
 
-            for (int i = 0; i < 4; i++) {
+            new_p.pos_[i] = {2- intial_y, intial_x};
+
+            Piece::Position diff = ge211::geometry::Posn<int>(new_p
+                                                                      .pos_[i].x -
+                                                              intial_x,
+                                                              new_p.pos_[i]
+                                                                      .y -
+                                                              intial_y);
+            new_p.actual_pos_[i] = {active_piece_.actual_pos_[i].x +
+                                    diff.x,
+                                    active_piece_.actual_pos_[i].y +
+                                    diff.y};
+        }
+
+
+            /*for (int i = 0; i < 4; i++) {
                 int intial_x = active_piece_.pos_[i].x;
                 int intial_y = active_piece_.pos_[i].y;
                 int real_intial_x = active_piece_.actual_pos_[i].x;
@@ -232,9 +270,13 @@ Model::rotate_piece()
                                                 diff.x,
                                                 active_piece_.actual_pos_[i].y +
                                                 diff.y};
-            }
+            }*/
 
         }
+    if(is_it_inside_board(new_p) && (!check_collision(new_p))){
+        active_piece_ = new_p;
+    }
+
 
     }
 
@@ -242,13 +284,15 @@ void
 Model::lock_piece(Piece piece)
 {
 
-  past_pieces.push_back(piece);
+  //*past_pieces.push_back(piece);
     for( auto pos: piece.get_actual_body()){
         board_.mboard[pos.y][pos.x] = 1;
+        board_.tboard[pos.y][pos.x] = piece.get_name();
     }
 
 
 }
+
 
 
 void
@@ -259,14 +303,13 @@ Model::clear_line()
         for (int i = 0; i < board_.dimensions().width; i++) {
             if (board_.mboard[j][i] == 1) {
                 sum_row++;
-
             }
-
         }
         if (sum_row == 10) {
-            board_.delete_line();
-        }
+            board_.delete_line(j);
 
+
+        }
     }
 }
 

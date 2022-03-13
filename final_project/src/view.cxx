@@ -32,6 +32,23 @@ View::draw(ge211::Sprite_set& set)
 
         set.add_sprite(board_tile, current_tile, 0.5);
     }
+
+    for (int j = 0; j < 20; j ++) {
+        for (int i = 0; i < 10; i++) {
+            Piece_type pt = model_.board_.tboard[j][i];
+            if (pt == Piece_type::t_flipped) {
+                set.add_sprite(T_piece, board_to_screen({i,j}), 2);
+            } else if (pt == Piece_type::square) {
+                set.add_sprite(square_piece, board_to_screen({i,j}), 2);
+            } else if (pt == Piece_type::L_shape) {
+                set.add_sprite(L_piece, board_to_screen({i,j}), 2);
+            } else if (pt == Piece_type::z) {
+                set.add_sprite(Z_piece, board_to_screen({i,j}), 2);
+            } else if (pt == Piece_type::line) {
+                set.add_sprite(I_piece, board_to_screen({i,j}), 2);
+            }
+        }
+    }
     for (Piece p :model_.past_pieces) {
 
         Piece_type pt = p.get_name();

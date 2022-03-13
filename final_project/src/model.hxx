@@ -86,6 +86,7 @@ public:
     Board board_;
 
     std::vector<Piece> past_pieces;
+    void clear_line();
 private:
 
 
@@ -107,7 +108,7 @@ private:
     bool check_collision ();
 
     // check if any row of board is full and delete it..
-    void clear_line();
+
 
     void
     update_board(std::vector<Position> posns, Piece brick);

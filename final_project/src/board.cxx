@@ -2,6 +2,7 @@
 
 
 
+
 using namespace ge211;
 
 Board::Board(Dimensions dims)
@@ -12,6 +13,7 @@ Board::Board(Dimensions dims)
         for (int j = 0; j < dims_.height ; j++) {
 
             mboard[j][i] = 0;
+            tboard[j][i] = Piece_type::neither;
         }
     }
     if (dims_.width < 2 || dims_.height < 2) {
@@ -52,17 +54,19 @@ Board::is_occupied(Position where) {
 }
 
 void
-Board::delete_line()
+Board::delete_line(int row)
 {
-    for(int j = dimensions().height; j > 0 ; j--){
-        if (j == 1){
-            for (int i = dimensions().height; i > 0; i--) {
+    for(int j = row; j >= 0 ; j--){
+        if (j == 0){
+            for (int i = 9; i >= 0; i--) {
                 mboard[j][i] = 0;
+                tboard[j][i] = Piece_type::neither;
             }
         }
         else{
-            for (int i = dimensions().height; i > 0; i--) {
+            for (int i = 9; i >= 0; i--) {
                 mboard[j][i] = mboard[j-1][i];
+                tboard[j][i] = tboard[j-1][i];
             }
         }
     }

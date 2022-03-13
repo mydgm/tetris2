@@ -22,6 +22,7 @@ public:
 
     explicit Board(Dimensions dims);
     int mboard[20][10];
+    Piece_type tboard[20][10];
 
 std::vector<Piece_type> past_pieces;
 
@@ -36,7 +37,7 @@ private:
 public:
     /// Returns the same `Dimensions` value passed to the
     /// constructor.
-    void delete_line();
+    void delete_line(int row);
     Dimensions dimensions() const;
 
     /// Returns whether the given position is in bounds.

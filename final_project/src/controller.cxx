@@ -30,9 +30,11 @@ if(!model_.is_game_over()) {
     if (update_frame >= max_frame) {
         model_.move_down();
         update_frame = 0;
-
     }
     update_frame += 1;
+    model_.clear_line();
+
+
 }
 
 }
@@ -54,6 +56,9 @@ void Controller::on_key(ge211::Key key)
         if (key == key.up()) {
            model_.rotate_piece();
 
+        }
+        if(key == ge211::Key::code(' ')) {
+            model_.update_piece();
         }
     }
 }
