@@ -13,19 +13,21 @@ public:
 
 protected:
     void draw(ge211::Sprite_set& set) override;
-    void on_key(ge211::Key) override;
-    void on_key_up(ge211::Key key) override;
-    void on_key_down(ge211::Key key) override;
-    void on_frame(double) override;
+    //void on_key(ge211::Key) override;
+
+    // void on_frame(double) override;
 
     View::Dimensions initial_window_dimensions() const override;
     std::string initial_window_title() const override;
+    void on_frame(double) override;
+    void on_key(ge211::Key key) override;
 
 private:
-    Model model_;
-    View view_;
-    int   max_frame = 20;
 
-    int update_frame =0;
+    View view_;
+    Model model_;
+    //int              upd_frames_ = 0;
+
+
 
 };

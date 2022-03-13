@@ -1,4 +1,3 @@
-#include "model.hxx"
 #include "controller.hxx"
 
 int

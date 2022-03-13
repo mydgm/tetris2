@@ -1,22 +1,25 @@
 cmake_minimum_required(VERSION 3.3)
 
 # TODO: Change “game” to the name of your game (no spaces!):
-project(DTC CXX)
+set(GAME_EXE game)
+
+project(${GAME_EXE} CXX)
 include(.cs211/cmake/CMakeLists.txt)
 
 # TODO: PUT ADDITIONAL MODEL .cxx FILES IN THIS LIST:
 set(MODEL_SRC
         src/model.cxx
-        src/piece.cxx
-        src/board.cxx)
+        src/board.cxx
+        src/piece.cxx)
 
 # TODO: PUT ADDITIONAL NON-MODEL (UI) .cxx FILES IN THIS LIST:
-add_program(main
+add_program(${GAME_EXE}
         ${MODEL_SRC}
         src/view.cxx
         src/controller.cxx
-        src/main.cxx)
-target_link_libraries(main ge211)
+        src/main.cxx
+        )
+target_link_libraries(${GAME_EXE} ge211)
 
 add_test_program(model_test
         ${MODEL_SRC}

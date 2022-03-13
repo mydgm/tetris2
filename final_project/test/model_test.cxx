@@ -1,13 +1,18 @@
 #include "model.hxx"
 #include <catch.hxx>
-#include "board.hxx"
-
-using namespace ge211;
 
 
 TEST_CASE("example test (TODO: replace this)")
 {
-    CHECK(1 + 1 == 2);
+    Model b = Model();
+    std::vector<Piece::Position> initial_p = b.active_piece_.actual_pos_;
+    b.active_piece_.actual_pos_[1] = {b.active_piece_.actual_pos_[1].x+1, b
+                                      .active_piece_.actual_pos_[1].y+1};
+
+    b.move_down();
+
+    CHECK(initial_p == b.active_piece_.actual_pos_);
+
 }
 
 //
@@ -15,8 +20,3 @@ TEST_CASE("example test (TODO: replace this)")
 //
 // These tests should demonstrate your functional requirements.
 //
-
-// One test case for Pieces can not rotate
-// One test case for removing a row and multiple rows
-// one test case for game over and the top of the board is reached
-// One test case

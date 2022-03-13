@@ -67,3 +67,4 @@ Board::delete_line()
         }
     }
 }
+

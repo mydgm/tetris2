@@ -21,6 +21,9 @@ public:
     int is_occupied(Position where);
 
     explicit Board(Dimensions dims);
+    int mboard[20][10];
+
+
 
 private:
 
@@ -28,13 +31,13 @@ private:
     // PRIVATE DATA MEMBERS
 
     Dimensions dims_;
-    int mboard[20][10];
+
 
 public:
     /// Returns the same `Dimensions` value passed to the
     /// constructor.
-    Dimensions dimensions() const;
     void delete_line();
+    Dimensions dimensions() const;
 
     /// Returns whether the given position is in bounds.
     bool good_position(Position) const;
@@ -44,4 +47,11 @@ public:
     Rectangle all_positions() const;
 
 
+
+
+#ifdef CS211_TESTING
+// When this class is compiled for testing, members of a struct named
+    // Test_access will be allowed to access private members of this class.
+    friend struct Test_access;
+#endif
 };
