@@ -33,23 +33,23 @@ View::draw(ge211::Sprite_set& set)
         set.add_sprite(board_tile, current_tile, 0.5);
     }
 
-    for (int j = 0; j < 20; j ++) {
+    for (int j = 0; j < 20; j++) {
         for (int i = 0; i < 10; i++) {
             Piece_type pt = model_.board_.tboard[j][i];
             if (pt == Piece_type::t_flipped) {
-                set.add_sprite(T_piece, board_to_screen({i,j}), 2);
+                set.add_sprite(T_piece, board_to_screen({i, j}), 2);
             } else if (pt == Piece_type::square) {
-                set.add_sprite(square_piece, board_to_screen({i,j}), 2);
+                set.add_sprite(square_piece, board_to_screen({i, j}), 2);
             } else if (pt == Piece_type::L_shape) {
-                set.add_sprite(L_piece, board_to_screen({i,j}), 2);
+                set.add_sprite(L_piece, board_to_screen({i, j}), 2);
             } else if (pt == Piece_type::z) {
-                set.add_sprite(Z_piece, board_to_screen({i,j}), 2);
+                set.add_sprite(Z_piece, board_to_screen({i, j}), 2);
             } else if (pt == Piece_type::line) {
-                set.add_sprite(I_piece, board_to_screen({i,j}), 2);
+                set.add_sprite(I_piece, board_to_screen({i, j}), 2);
             }
         }
     }
-    for (Piece p :model_.past_pieces) {
+    for (Piece p: model_.past_pieces) {
 
         Piece_type pt = p.get_name();
         for (auto pos: p.get_actual_body()) {
@@ -69,30 +69,32 @@ View::draw(ge211::Sprite_set& set)
     Piece_type type = model_.active_piece_.get_name();
     for (auto pos: model_.active_piece_.get_actual_body()) {
         if (type == Piece_type::t_flipped) {
-            set.add_sprite(T_piece, board_to_screen(pos)
-                    ,2);
+            set.add_sprite(T_piece, board_to_screen(pos), 2);
+        } else if (type == Piece_type::square) {
+            set.add_sprite(square_piece, board_to_screen(pos), 2);
+        } else if (type == Piece_type::L_shape) {
+            set.add_sprite(L_piece, board_to_screen(pos), 2);
+        } else if (type == Piece_type::z) {
+            set.add_sprite(Z_piece, board_to_screen(pos), 2);
+        } else if (type == Piece_type::line) {
+            set.add_sprite(I_piece, board_to_screen(pos), 2);
         }
-        else if (type == Piece_type::square) {
-            set.add_sprite(square_piece, board_to_screen(pos)
-                    ,2);
+        Piece_type type2 = model_.ghost_piece.get_name();
+        for (auto pos: model_.ghost_piece.get_actual_body()) {
+            if (type2 == Piece_type::t_flipped) {
+                set.add_sprite(ghost_cell, board_to_screen(pos), 1);
+            } else if (type2 == Piece_type::square) {
+                set.add_sprite(ghost_cell, board_to_screen(pos), 1);
+            } else if (type2 == Piece_type::L_shape) {
+                set.add_sprite(ghost_cell, board_to_screen(pos), 1);
+            } else if (type2 == Piece_type::z) {
+                set.add_sprite(ghost_cell, board_to_screen(pos), 1);
+            } else if (type2 == Piece_type::line) {
+                set.add_sprite(ghost_cell, board_to_screen(pos), 1);
+            }
         }
-        else if (type == Piece_type::L_shape) {
-            set.add_sprite(L_piece, board_to_screen(pos)
-                    ,2);
-        }
-        else if (type == Piece_type::z) {
-            set.add_sprite(Z_piece, board_to_screen(pos)
-                    ,2);
-        }
-        else if (type == Piece_type::line) {
-            set.add_sprite(I_piece, board_to_screen(pos)
-                    ,2);
-        }
+
     }
-
-
-
-   
 }
 /*
     for (int row = 0; row <model_.board().dimensions().height; row++) {

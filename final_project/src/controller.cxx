@@ -20,19 +20,24 @@ Controller::draw(ge211::Sprite_set& set)
 }
 double max_frame = 20;
 double update_frame = 0;
+double update_frame2 = 0;
 
 
 
 void Controller::on_frame(double)
 {
 if(!model_.is_game_over()) {
-    Piece p = model_.active_piece_;
-    if (update_frame >= max_frame) {
-        model_.move_down();
-        update_frame = 0;
+
+    if(model_.game_active) {
+        Piece p = model_.active_piece_;
+        if (update_frame >= max_frame) {
+            model_.move_down();
+            model_.ghost();
+            update_frame = 0;
+        }
+        update_frame += 1;
+        model_.clear_line();
     }
-    update_frame += 1;
-    model_.clear_line();
 
 
 }
@@ -40,8 +45,11 @@ if(!model_.is_game_over()) {
 }
 void Controller::on_key(ge211::Key key)
 {
+    if(key == ge211::Key::code('s')) {
+        model_.game_active = true;
+    }
 
-    if (!model_.is_game_over()) {
+    if (!model_.is_game_over() && model_.game_active) {
 
         if (key == key.left()) {
             model_.move_left(model_.active_piece());
@@ -54,12 +62,18 @@ void Controller::on_key(ge211::Key key)
             model_.move_down();
         }
         if (key == key.up()) {
+
            model_.rotate_piece();
 
         }
+
+
         if(key == ge211::Key::code(' ')) {
-            model_.update_piece();
+            if (model_.times_swapped < 3) {
+                model_.exchange_piece();
+            }
         }
+
     }
 }
 View::Dimensions Controller::initial_window_dimensions() const

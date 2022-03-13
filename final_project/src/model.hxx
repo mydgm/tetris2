@@ -4,7 +4,8 @@
 #include <piece.hxx>
 #include <board.hxx>
 
-class Model{
+class Model
+{
 public:
     /// Model dimensions will use `int` coordinates, as board dimensions do.
     using Dimensions = Board::Dimensions;
@@ -29,47 +30,49 @@ public:
     // function on frame to set the board position to true if the game detect
     // collison.
 
-    void on_frame () ;
+    void on_frame();
     // update the piece to a new piece
 
-    void update_piece ();
+    void update_piece();
 
 
     // return the active piece inside the board
-    Piece active_piece ()
-    {return active_piece_ ;}
+    Piece active_piece()
+    { return active_piece_; }
+
     void rotate_piece();
 
-    Piece next_piece ()
-    { return next_piece_;}
+    Piece next_piece()
+    { return next_piece_; }
 
     // check the top row of the board and actually determine if there a full
     // column of board full and return game over
-    bool is_game_over () ;
+    bool is_game_over();
 
     //gives a shadow of the current piece at the bottom of the screen, also
     // check the lowest positon that the piece can actually reach
-    Piece ghost() const;
+
 
     //check the collisions of any of the pieces going on the board
 
     //check if the piece can actually move in any direction and return true
     // if it can
-    bool is_it_possible_move ();
+    bool is_it_possible_move();
+    void ghost();
     // add a piece to the board and update that position of the board to true.
-    void lock_piece (Piece) ;
+    void lock_piece(Piece);
 
 
     //exchange the current piece if the player doesn't want it to be there if
     //
-    void exchange_piece ();
+    void exchange_piece();
 
     //place the current piece at the very bottom position of the the board.
-    void place_at_the_bottom ();
+    void place_at_the_bottom();
 
     // Responsible for updating the score and checking it
     std::size_t score() const
-    {return score_;}
+    { return score_; }
 
     // Moves a piece left on left arrow press
     void move_left(Piece piece);
@@ -87,8 +90,12 @@ public:
 
     std::vector<Piece> past_pieces;
     void clear_line();
-private:
+    int times_swapped = 0;
+    bool game_active = false;
+    Piece ghost_piece = active_piece_;
 
+
+private:
 
 
     Piece next_piece_ = create_piece(random_piece());
@@ -103,9 +110,8 @@ private:
 
     bool can_exchange_piece_ = true;
 
-    bool game_over_ = false;
 
-    bool check_collision ();
+    bool check_collision();
 
     // check if any row of board is full and delete it..
 
@@ -115,10 +121,10 @@ private:
 
 
 #ifdef CS211_TESTING
-// When this class is compiled for testing, members of a struct named
-    // Test_access will be allowed to access private members of this class.
+    // When this class is compiled for testing, members of a struct named
+        // Test_access will be allowed to access private members of this class.
 
-    friend struct Test_access;
+        friend struct Test_access;
 #endif
 
 
@@ -130,6 +136,9 @@ private:
     is_it_possible_move(Piece p);
     void
     move_piece_faster();
+
+    void
+    move_ghost_down();
 };
 
 /*class Model

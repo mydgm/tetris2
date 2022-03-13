@@ -1,5 +1,7 @@
 #include "model.hxx"
 #include "piece.hxx"
+#include "model.hxx"
+
 #include <cmath>
 
 Model::Model()
@@ -57,9 +59,103 @@ Model::move_down()
     else{
         lock_piece(active_piece_);
         active_piece_ = create_piece(random_piece());
+        ghost_piece   = active_piece_;
+
 
     }
 }
+void
+Model::move_ghost_down()
+{
+
+    Piece next_p = ghost_piece;
+    while (!check_collision(next_p)) {
+        for (int i = 0; i < 4; i++) {
+
+            next_p.actual_pos_[i] =
+                    {ghost_piece.actual_pos_[i].x,
+                     ghost_piece.actual_pos_[i].y + 1};
+
+        }
+        if (is_it_inside_board(next_p) && (!check_collision(next_p))) {
+            ghost_piece = next_p;
+        }
+    }
+}
+void Model::ghost()
+{
+
+
+    while (is_it_inside_board(ghost_piece) && (!check_collision(ghost_piece))) {
+
+        //move_down(ghost_piece);
+        //  update_board(ghost_piece.posns(),ghost_piece);
+
+
+        for (int i = 0; i < 4; i++) {
+
+            ghost_piece.actual_pos_[i].y++;
+
+
+        }
+
+    }
+    for (int i = 0; i < 4; i++) {
+
+        ghost_piece.actual_pos_[i].y--;
+
+
+    }
+
+
+}
+
+/*Model::move_ghost_right()
+{
+
+    Piece gho = active_piece_;
+    for (int i = 0; i < 4; i++) {
+
+
+        next_p.actual_pos_[i] =
+                {active_piece_.actual_pos_[i].x,
+                 active_piece_.actual_pos_[i].y + 1};
+
+
+    }
+    if(is_it_inside_board(next_p) && (!check_collision(next_p))){
+        active_piece_ = next_p;
+    }
+
+    else{
+        lock_piece(active_piece_);
+        active_piece_ = create_piece(random_piece());
+
+    }
+}
+Model::move_ghost_left()
+{
+
+    Piece gho = active_piece_;
+    for (int i = 0; i < 4; i++) {
+
+
+        next_p.actual_pos_[i] =
+                {active_piece_.actual_pos_[i].x,
+                 active_piece_.actual_pos_[i].y + 1};
+
+
+    }
+    if(is_it_inside_board(next_p) && (!check_collision(next_p))){
+        active_piece_ = next_p;
+    }
+
+    else{
+        lock_piece(active_piece_);
+        active_piece_ = create_piece(random_piece());
+
+    }
+}*/
 void
 Model::move_left(Piece piece)
 {
@@ -72,6 +168,13 @@ Model::move_left(Piece piece)
     }
     if(is_it_inside_board(next_p)&& (!check_collision(next_p))){
         active_piece_ = next_p;
+        for (int i = 0; i < 4; i++) {
+            ghost_piece.actual_pos_[i] =
+                    {ghost_piece.actual_pos_[i].x-1,
+                     ghost_piece.actual_pos_[i].y};
+
+        }
+
     }
 }
 void
@@ -86,6 +189,12 @@ Model::move_right(Piece piece)
     }
     if(is_it_inside_board(next_p)&&(!check_collision(next_p))){
         active_piece_ = next_p;
+        for (int i = 0; i < 4; i++) {
+            ghost_piece.actual_pos_[i] =
+                    {ghost_piece.actual_pos_[i].x+1,
+                     ghost_piece.actual_pos_[i].y};
+
+        }
     }
 
 }
@@ -116,25 +225,7 @@ Model::is_game_over()
     return false;
 }
 
-Piece
-Model::ghost() const
-{
-    Piece ghost_piece = active_piece_;
 
-    //while (is_it_possible to move)
-
-    //for each position of ghost piece
-    //(pos.y +1)
-
-    Piece new_ghost = ghost_piece;
-
-    // for each position of the new ghost
-    // pos.y - 1
-    // return new ghost
-    // want the ghost piece to have the lowest possible value at the board
-    //what function I can use to do that?
-    return new_ghost;
-}
 bool
 Model::check_collision(Piece p )
 {
@@ -185,6 +276,7 @@ void
 Model::rotate_piece()
 {
     ///check rotate
+
     Piece new_p = active_piece_;
     if (new_p.get_name() == Piece_type::line) {
         for (int i = 0; i < 4; i++) {
@@ -275,6 +367,7 @@ Model::rotate_piece()
         }
     if(is_it_inside_board(new_p) && (!check_collision(new_p))){
         active_piece_ = new_p;
+        ghost_piece = active_piece_;
     }
 
 
@@ -293,7 +386,7 @@ Model::lock_piece(Piece piece)
 
 }
 
-
+//create ghost piece;//while can_move move down make it go on a faster frame
 
 void
 Model::clear_line()
@@ -316,6 +409,8 @@ Model::clear_line()
 void Model::exchange_piece()
     {
         active_piece_ = create_piece(random_piece());
+        times_swapped ++;
+        ghost_piece = active_piece_;
     }
 
 void
@@ -324,6 +419,8 @@ Model::update_piece()
 active_piece_ = next_piece_;
 
 }
+
+
 
 
 
