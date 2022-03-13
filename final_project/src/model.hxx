@@ -94,7 +94,8 @@ public:
     bool game_active = false;
     Piece ghost_piece = active_piece_;
 
-
+    void
+    hard_drop();
 private:
 
 
@@ -139,6 +140,7 @@ private:
 
     void
     move_ghost_down();
+
 };
 
 /*class Model

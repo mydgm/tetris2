@@ -85,8 +85,8 @@ Model::move_ghost_down()
 void Model::ghost()
 {
 
-
-    while (is_it_inside_board(ghost_piece) && (!check_collision(ghost_piece))) {
+    Piece copy_p = ghost_piece;
+    while (is_it_inside_board(copy_p) && (!check_collision(copy_p))) {
 
         //move_down(ghost_piece);
         //  update_board(ghost_piece.posns(),ghost_piece);
@@ -94,7 +94,7 @@ void Model::ghost()
 
         for (int i = 0; i < 4; i++) {
 
-            ghost_piece.actual_pos_[i].y++;
+            copy_p.actual_pos_[i].y++;
 
 
         }
@@ -102,10 +102,13 @@ void Model::ghost()
     }
     for (int i = 0; i < 4; i++) {
 
-        ghost_piece.actual_pos_[i].y--;
+        copy_p.actual_pos_[i].y--;
 
 
     }
+
+    ghost_piece.actual_pos_ = copy_p.actual_pos_;
+
 
 
 }
@@ -404,6 +407,11 @@ Model::clear_line()
 
         }
     }
+}
+void
+Model::hard_drop()
+{
+    active_piece_.actual_pos_ = ghost_piece.actual_pos_;
 }
 
 void Model::exchange_piece()

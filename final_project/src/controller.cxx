@@ -35,7 +35,7 @@ if(!model_.is_game_over()) {
             model_.ghost();
             update_frame = 0;
         }
-        update_frame += 1;
+        update_frame += 2;
         model_.clear_line();
     }
 
@@ -72,6 +72,9 @@ void Controller::on_key(ge211::Key key)
             if (model_.times_swapped < 3) {
                 model_.exchange_piece();
             }
+        }
+        if(key == ge211::Key::code('h')) {
+            model_.hard_drop();
         }
 
     }
